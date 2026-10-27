@@ -1,8 +1,8 @@
+import Button from '@/components/Button';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { theme } from '../constants/theme';
-import Button from './Button';
 
 type Benefit = {
   id: string;
@@ -74,7 +74,6 @@ export default function Subscription() {
         </View>
       </View>
 
-      /* Trial button (team Button) */
       <Button label="Probar 7 días gratis" onPress={() => {}} />
     </ScrollView>
   );
