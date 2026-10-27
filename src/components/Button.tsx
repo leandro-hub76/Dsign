@@ -10,10 +10,10 @@ return (
 const styles = StyleSheet.create({
 // Select your button in Figma and fill each value with a theme key.
 button: {
-backgroundColor: "theme.colors", // Fill → theme.colors
+backgroundColor: "#4F5D39", // Fill → theme.colors
 paddingVertical: 10, // Auto layout → vertical padding → theme.spacing
 paddingHorizontal: 10, // Auto layout → horizontal padding → theme.spacing
-borderRadius: 'theme.radius', // Corner radius → theme.radius
+borderRadius: 16, // Corner radius → theme.radius
 alignItems: 'center',
 },
 pressed: { opacity: 0.8, transform: [{ scale: 0.98 }] },
@@ -21,6 +21,6 @@ pressed: { opacity: 0.8, transform: [{ scale: 0.98 }] },
 label: {
 fontSize: 16, // Typography → Font size → theme.text
 fontWeight: 'normal', // Typography → weight: 'normal', '500', '600' or 'bold'
-color: 'theme.colors', // Fill of the text → theme.colors
+color: '#ffffff', // Fill of the text → theme.colors
 },
 });
