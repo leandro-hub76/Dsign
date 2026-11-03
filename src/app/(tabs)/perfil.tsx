@@ -5,7 +5,7 @@ export default function Profile() {
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Perfil</Text>
-      <Link href="/first_lesson" asChild>
+      <Link href="/lesson" asChild>
   <Pressable style={styles.button}>
     <Text style={styles.buttonText}>Primera lección</Text>
   </Pressable>
