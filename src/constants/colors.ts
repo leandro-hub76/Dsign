@@ -21,4 +21,6 @@ tabBarBorder: '#000000',
   gold: '#D4B13A', // unlocked rank shield
   locked: '#2F3A20', // locked rank shield
   pill: '#8C8C8C', // gray name and level tags
+    danger: '#B80000', // logout button
+  divider: '#B9BBAE', // lines between settings rows
 };

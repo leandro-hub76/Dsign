@@ -43,8 +43,8 @@ export async function scheduleDailyReminder(hour: number, minute: number): Promi
   }
   const id = await Notifications.scheduleNotificationAsync({
     content: {
-      title: 'Título del recordatorio',
-      body: 'Texto del recordatorio',
+      title: 'Dsign',
+      body: '¿Ya practicaste hoy? Mantén tu racha 🔥',
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.DAILY,
