@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { theme } from '../constants/theme';
-
 export default function ProfileInfo() {
   return (
     <View style={styles.info}>
@@ -18,9 +18,9 @@ export default function ProfileInfo() {
         </View>
       </View>
 
-      <Pressable style={styles.settings}>
-        <Ionicons name="settings-outline" size={20} color="#FFFFFF" />
-      </Pressable>
+     <Pressable style={styles.settings} onPress={() => router.push('/settings')}>
+  <Ionicons name="settings-outline" size={20} color="#FFFFFF" />
+</Pressable>
     </View>
   );
 }

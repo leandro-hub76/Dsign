@@ -1,10 +1,25 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { theme } from '../constants/theme';
+import { calculateStreak, loadResults } from '../storage/data';
 
 const hearts = [1, 2, 3, 4, 5];
 
 export default function Header() {
+  const [streak, setStreak] = useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchStreak() {
+        const results = await loadResults();
+        setStreak(calculateStreak(results));
+      }
+      fetchStreak();
+    }, [])
+  );
+
   return (
     <View style={styles.header}>
       <View style={styles.brand}>
@@ -15,7 +30,7 @@ export default function Header() {
       <View style={styles.stats}>
         <View style={styles.pill}>
           <Ionicons name="water" size={20} color="#FFFFFF" />
-          <Text style={styles.pillNumber}>12</Text>
+          <Text style={styles.pillNumber}>{streak}</Text>
         </View>
         <View style={styles.pill}>
           {hearts.map((heart) => (
