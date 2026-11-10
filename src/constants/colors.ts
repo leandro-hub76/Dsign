@@ -23,4 +23,6 @@ tabBarBorder: '#000000',
   pill: '#8C8C8C', // gray name and level tags
     danger: '#B80000', // logout button
   divider: '#B9BBAE', // lines between settings rows
+  sage: '#AAB09F', // stat boxes and text inputs
+  sand: '#D4D2BD', // soft beige: inactive chips, bars, shield
 };
