@@ -18,7 +18,7 @@ export default function ProfileInfo() {
         </View>
       </View>
 
-     <Pressable style={styles.settings} onPress={() => router.push('/settings')}>
+     <Pressable style={styles.settings} onPress={() => router.push('/Settings')}>
   <Ionicons name="settings-outline" size={20} color="#FFFFFF" />
 </Pressable>
     </View>
