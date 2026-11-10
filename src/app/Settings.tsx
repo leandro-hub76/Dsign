@@ -7,10 +7,10 @@ import AccountCard from '../components/AccountCard';
 import SettingsSection from '../components/SettingsSection';
 import { theme } from '../constants/theme';
 import {
-    askNotificationPermission,
-    cancelReminder,
-    loadReminder,
-    scheduleDailyReminder,
+  askNotificationPermission,
+  cancelReminder,
+  loadReminder,
+  scheduleDailyReminder,
 } from '../notifications/notifications';
 
 // Time of the daily reminder (24h). For a quick test, set it 2 minutes ahead.
@@ -57,7 +57,7 @@ export default function Settings() {
   function handleLogout() {
     Alert.alert('Cerrar sesión', '¿Seguro que quieres salir?', [
       { text: 'Cancelar', style: 'cancel' },
-      { text: 'Cerrar sesión', style: 'destructive', onPress: () => router.replace('/') },
+      { text: 'Cerrar sesión', style: 'destructive', onPress: () => router.replace('/Login') },
     ]);
   }
 

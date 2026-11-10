@@ -11,9 +11,9 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AuthField from '../../components/AuthField';
-import AuthTabs, { AuthMode } from '../../components/AuthTabs';
-import { theme } from '../../constants/theme';
+import AuthField from '../components/AuthField';
+import AuthTabs, { AuthMode } from '../components/AuthTabs';
+import { theme } from '../constants/theme';
 
 export default function Auth() {
   const [mode, setMode] = useState<AuthMode>('login');
