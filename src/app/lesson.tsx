@@ -1,3 +1,4 @@
+
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -9,8 +10,6 @@ import OptionCard, { OptionState } from '../components/OptionCard';
 import QuizHeader from '../components/QuizHeader';
 import { theme } from '../constants/theme';
 import { LessonResult as SavedResult, loadResults, saveResults, today } from '../storage/data';
-
-// ---------- Data ----------
 
 type Option = { id: string; label?: string; swatches?: string[] };
 type Question = {
@@ -62,8 +61,6 @@ const questions: Question[] = [
   },
 ];
 
-// ---------- Screen ----------
-
 type Stage = 'intro' | 'quiz' | 'result';
 
 export default function Lesson() {
@@ -98,7 +95,6 @@ export default function Lesson() {
 
   async function finish() {
     const results = await loadResults();
-
     const newResult: SavedResult = {
       id: Date.now().toString(),
       lessonId: LESSON_ID,
@@ -106,7 +102,6 @@ export default function Lesson() {
       total,
       date: today(),
     };
-
     await saveResults([newResult, ...results]);
     setStage('result');
   }
@@ -114,7 +109,6 @@ export default function Lesson() {
   function handleButton() {
     if (selectedId === null) return;
 
-    // First tap: check the answer
     if (!isChecked) {
       setIsChecked(true);
       if (selectedId === question.correctId) {
@@ -125,9 +119,9 @@ export default function Lesson() {
       return;
     }
 
-    // Second tap: go to the next question (or finish)
     setSelectedId(null);
     setIsChecked(false);
+
     if (hearts === 0 || current + 1 >= total) {
       finish();
     } else {
@@ -198,8 +192,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
+    justifyContent: 'space-between',
     alignContent: 'flex-start',
-    gap: theme.spacing.sm,
+    rowGap: theme.spacing.sm,
   },
   disabled: { opacity: 0.4 },
 });

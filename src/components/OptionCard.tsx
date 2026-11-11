@@ -1,5 +1,7 @@
+
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { theme } from '../constants/theme';
 
 export type OptionState = 'idle' | 'selected' | 'correct' | 'wrong';
@@ -15,15 +17,22 @@ type Props = {
 };
 
 export default function OptionCard({
-  letter,
-  label,
-  swatches,
-  variant = 'row',
-  state,
-  disabled,
-  onPress,
+  letter, label, swatches, variant = 'row', state, disabled, onPress,
 }: Props) {
   const isTile = variant === 'tile';
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.96);
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1);
+  };
 
   const badge = (
     <View style={[styles.badge, isTile && styles.badgeSmall]}>
@@ -50,32 +59,38 @@ export default function OptionCard({
     ) : null;
 
   return (
-    <Pressable
-      style={[styles.base, isTile ? styles.tile : styles.row, styles[state]]}
-      onPress={onPress}
-      disabled={disabled}
-    >
-      {isTile ? (
-        <>
-          {colorsRow}
-          <View style={styles.footer}>
+    <Animated.View style={[isTile ? styles.tileWrapper : styles.rowWrapper, animatedStyle]}>
+      <Pressable
+        style={[styles.base, isTile ? styles.tile : styles.row, styles[state]]}
+        onPress={onPress}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        disabled={disabled}
+      >
+        {isTile ? (
+          <>
+            {colorsRow}
+            <View style={styles.footer}>
+              {badge}
+              {icon}
+            </View>
+          </>
+        ) : (
+          <>
             {badge}
+            {colorsRow}
+            <Text style={styles.label}>{label}</Text>
             {icon}
-          </View>
-        </>
-      ) : (
-        <>
-          {badge}
-          {colorsRow}
-          <Text style={styles.label}>{label}</Text>
-          {icon}
-        </>
-      )}
-    </Pressable>
+          </>
+        )}
+      </Pressable>
+    </Animated.View>
   );
 }
 
 const styles = StyleSheet.create({
+  rowWrapper: { width: '100%' },
+  tileWrapper: { width: '48%' },
   base: {
     borderRadius: theme.radius.md,
     borderWidth: 2,
@@ -89,18 +104,15 @@ const styles = StyleSheet.create({
     padding: theme.spacing.xs,
   },
   tile: {
-    flexBasis: '45%',
-    flexGrow: 1,
+    width: '100%',
     alignItems: 'center',
     gap: theme.spacing.sm,
     paddingVertical: theme.spacing.md,
   },
-  // States (the name matches OptionState)
   idle: {},
   selected: { borderColor: theme.colors.primarySoft },
   correct: { borderColor: theme.colors.success, backgroundColor: theme.colors.successSoft },
   wrong: { borderColor: theme.colors.error, backgroundColor: theme.colors.errorSoft },
-
   badge: {
     width: 36,
     height: 36,

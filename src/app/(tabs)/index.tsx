@@ -1,13 +1,15 @@
 
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ContinueCard from '../../components/ContinueCard';
@@ -17,9 +19,13 @@ import ProgressRow from '../../components/ProgressRow';
 import StatBox from '../../components/StatBox';
 import WeekCard from '../../components/WeekCard';
 import { theme } from '../../constants/theme';
+import { loadSession, User } from '../../storage/data';
 
-// ---------- Data ----------
+// ANIMACIÓN FADE IN
+const enter = (index: number) =>
+  FadeInDown.delay(index * 100).duration(450);
 
+// DATOS DE LA SIGUIENTE LECCIÓN
 const nextLesson = {
   symbol: 'Aa',
   number: 3,
@@ -28,6 +34,7 @@ const nextLesson = {
   minutes: 12,
 };
 
+// TIPO DE ESTADÍSTICAS
 type Stat = {
   id: string;
   icon: keyof typeof Ionicons.glyphMap;
@@ -36,6 +43,7 @@ type Stat = {
   label: string;
 };
 
+// ESTADÍSTICAS
 const stats: Stat[] = [
   {
     id: 'streak',
@@ -60,6 +68,7 @@ const stats: Stat[] = [
   },
 ];
 
+// ACTIVIDAD SEMANAL
 const weekActivity = [
   true,
   true,
@@ -70,6 +79,7 @@ const weekActivity = [
   false,
 ];
 
+// CURSOS EN PROGRESO
 const inProgress = [
   {
     id: 'color',
@@ -109,39 +119,81 @@ const inProgress = [
   },
 ];
 
-// ---------- Screen ----------
-
+// PANTALLA PRINCIPAL
 export default function Home() {
+
+  const [user, setUser] = useState<User | null>(null);
+
+  // IR A LA LECCIÓN
   const handleContinue = () => {
     router.push('/lesson');
   };
 
+  // OBTENER EL USUARIO
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchUser() {
+        const session = await loadSession();
+
+        if (session === null) {
+          router.replace('/Login');
+          return;
+        }
+
+        setUser(session);
+      }
+
+      fetchUser();
+    }, [])
+  );
+
   return (
-    <SafeAreaView style={styles.screen} edges={['top']}>
+    <SafeAreaView
+      style={styles.screen}
+      edges={['top']}
+    >
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}
       >
-        <Header />
 
-        <View>
+        {/* HEADER */}
+        <Animated.View entering={enter(0)}>
+          <Header />
+        </Animated.View>
+
+        {/* BIENVENIDA */}
+        <Animated.View entering={enter(1)}>
           <Text style={styles.welcome}>
             Bienvenido de vuelta
           </Text>
 
           <Text style={styles.userName}>
-            Leandro Aramburo
+            {user?.username}
           </Text>
-        </View>
+        </Animated.View>
 
-        <LevelCard level={8} filled={5} />
+        {/* NIVEL */}
+        <Animated.View entering={enter(2)}>
+          <LevelCard
+            level={8}
+            filled={5}
+          />
+        </Animated.View>
 
-        <ContinueCard
-          {...nextLesson}
-          onContinue={handleContinue}
-        />
+        {/* CONTINUAR LECCIÓN */}
+        <Animated.View entering={enter(3)}>
+          <ContinueCard
+            {...nextLesson}
+            onContinue={handleContinue}
+          />
+        </Animated.View>
 
-        <View style={styles.statsRow}>
+        {/* ESTADÍSTICAS */}
+        <Animated.View
+          entering={enter(4)}
+          style={styles.statsRow}
+        >
           {stats.map((stat) => (
             <StatBox
               key={stat.id}
@@ -151,32 +203,45 @@ export default function Home() {
               label={stat.label}
             />
           ))}
-        </View>
+        </Animated.View>
 
-        <WeekCard activity={weekActivity} />
+        {/* ACTIVIDAD SEMANAL */}
+        <Animated.View entering={enter(5)}>
+          <WeekCard activity={weekActivity} />
+        </Animated.View>
 
+        {/* CURSOS EN PROGRESO */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>
-            En curso
-          </Text>
 
-          {inProgress.map((course) => (
-            <ProgressRow
+          <Animated.View entering={enter(6)}>
+            <Text style={styles.sectionTitle}>
+              En curso
+            </Text>
+          </Animated.View>
+
+          {inProgress.map((course, index) => (
+            <Animated.View
               key={course.id}
-              name={course.name}
-              progress={course.progress}
-              icon={course.icon}
-            />
+              entering={enter(index + 7)}
+            >
+              <ProgressRow
+                name={course.name}
+                progress={course.progress}
+                icon={course.icon}
+              />
+            </Animated.View>
           ))}
+
         </View>
+
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-// ---------- Styles ----------
-
+// ESTILOS
 const styles = StyleSheet.create({
+
   screen: {
     flex: 1,
     backgroundColor: theme.colors.background,
@@ -211,4 +276,5 @@ const styles = StyleSheet.create({
     fontSize: theme.text.body,
     color: theme.colors.textSecondary,
   },
+
 });

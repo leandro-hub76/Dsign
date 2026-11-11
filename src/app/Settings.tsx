@@ -12,7 +12,7 @@ import {
   loadReminder,
   scheduleDailyReminder,
 } from '../notifications/notifications';
-
+import { clearSession } from '../storage/data';
 // Time of the daily reminder (24h). For a quick test, set it 2 minutes ahead.
 const REMINDER_HOUR = 20;
 const REMINDER_MINUTE = 0;
@@ -57,7 +57,14 @@ export default function Settings() {
   function handleLogout() {
     Alert.alert('Cerrar sesión', '¿Seguro que quieres salir?', [
       { text: 'Cancelar', style: 'cancel' },
-      { text: 'Cerrar sesión', style: 'destructive', onPress: () => router.replace('/Login') },
+      {
+        text: 'Cerrar sesión',
+        style: 'destructive',
+        onPress: async () => {
+          await clearSession();
+          router.replace('/Login');
+        },
+      },
     ]);
   }
 
@@ -76,9 +83,9 @@ export default function Settings() {
         <SettingsSection
           title="CUENTA"
           rows={[
-            { id: 'dsign', icon: 'sparkles-outline', label: 'Dsign', onPress: () => {} },
-            { id: 'password', icon: 'key-outline', label: 'Cambiar contraseña', onPress: () => {} },
-            { id: 'email', icon: 'mail-outline', label: 'Correo electrónico', onPress: () => {} },
+            { id: 'dsign', icon: 'sparkles-outline', label: 'Dsign', onPress: () => { } },
+            { id: 'password', icon: 'key-outline', label: 'Cambiar contraseña', onPress: () => { } },
+            { id: 'email', icon: 'mail-outline', label: 'Correo electrónico', onPress: () => { } },
           ]}
         />
 
@@ -112,7 +119,7 @@ export default function Settings() {
         <SettingsSection
           title="PREFERENCIAS"
           rows={[
-            { id: 'language', icon: 'globe-outline', label: 'Idioma', value: 'Español', onPress: () => {} },
+            { id: 'language', icon: 'globe-outline', label: 'Idioma', value: 'Español', onPress: () => { } },
             {
               id: 'sounds',
               icon: 'volume-medium-outline',
@@ -126,10 +133,10 @@ export default function Settings() {
         <SettingsSection
           title="AYUDA Y SOPORTE"
           rows={[
-            { id: 'help', icon: 'help-circle-outline', label: 'Centro de ayuda', onPress: () => {} },
-            { id: 'report', icon: 'warning-outline', label: 'Reportar un problema', onPress: () => {} },
-            { id: 'terms', icon: 'document-text-outline', label: 'Términos y condiciones', onPress: () => {} },
-            { id: 'privacy', icon: 'lock-closed-outline', label: 'Política de privacidad', onPress: () => {} },
+            { id: 'help', icon: 'help-circle-outline', label: 'Centro de ayuda', onPress: () => { } },
+            { id: 'report', icon: 'warning-outline', label: 'Reportar un problema', onPress: () => { } },
+            { id: 'terms', icon: 'document-text-outline', label: 'Términos y condiciones', onPress: () => { } },
+            { id: 'privacy', icon: 'lock-closed-outline', label: 'Política de privacidad', onPress: () => { } },
           ]}
         />
 

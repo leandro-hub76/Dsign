@@ -1,8 +1,23 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { theme } from '../constants/theme';
+import { loadSession, User } from '../storage/data';
+
 export default function ProfileInfo() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchUser() {
+        const session = await loadSession();
+        setUser(session);
+      }
+      fetchUser();
+    }, [])
+  );
+
   return (
     <View style={styles.info}>
       <View style={styles.avatar}>
@@ -11,16 +26,16 @@ export default function ProfileInfo() {
 
       <View style={styles.tags}>
         <View style={styles.tag}>
-          <Text style={styles.tagText}>LEANDRO ARAMBURO</Text>
+          <Text style={styles.tagText}>{user ? user.username.toUpperCase() : ''}</Text>
         </View>
         <View style={styles.tag}>
           <Text style={styles.tagText}>NIVEL 5</Text>
         </View>
       </View>
 
-     <Pressable style={styles.settings} onPress={() => router.push('/Settings')}>
-  <Ionicons name="settings-outline" size={20} color="#FFFFFF" />
-</Pressable>
+      <Pressable style={styles.settings} onPress={() => router.push('/Settings')}>
+        <Ionicons name="settings-outline" size={20} color="#FFFFFF" />
+      </Pressable>
     </View>
   );
 }
