@@ -68,3 +68,42 @@ export function calculateStreak(results: LessonResult[]): number {
   }
   return streak;
 }
+
+export type User = {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+};
+
+const USERS_KEY = 'users';
+const SESSION_KEY = 'session';
+
+export async function loadUsers(): Promise<User[]> {
+  const saved = await AsyncStorage.getItem(USERS_KEY);
+  if (saved === null) {
+    return [];
+  }
+  return JSON.parse(saved);
+}
+
+export async function saveUsers(users: User[]) {
+  await AsyncStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+export async function loadSession(): Promise<User | null> {
+  const userId = await AsyncStorage.getItem(SESSION_KEY);
+  if (userId === null) {
+    return null;
+  }
+  const users = await loadUsers();
+  return users.find((user) => user.id === userId) ?? null;
+}
+
+export async function saveSession(userId: string) {
+  await AsyncStorage.setItem(SESSION_KEY, userId);
+}
+
+export async function clearSession() {
+  await AsyncStorage.removeItem(SESSION_KEY);
+}

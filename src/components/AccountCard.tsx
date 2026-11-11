@@ -1,8 +1,23 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { theme } from '../constants/theme';
+import { loadSession, User } from '../storage/data';
 
 export default function AccountCard() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchUser() {
+        const session = await loadSession();
+        setUser(session);
+      }
+      fetchUser();
+    }, [])
+  );
+
   return (
     <View style={styles.card}>
       <View style={styles.avatar}>
@@ -10,8 +25,8 @@ export default function AccountCard() {
       </View>
 
       <View style={styles.info}>
-        <Text style={styles.name}>Leandro Aramburo</Text>
-        <Text style={styles.email}>leandroaram@gmail.com</Text>
+        <Text style={styles.name}>{user?.username}</Text>
+        <Text style={styles.email}>{user?.email}</Text>
       </View>
 
       <Pressable>

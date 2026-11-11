@@ -8,6 +8,7 @@ type Props = {
   placeholder: string;
   secure?: boolean;
   keyboardType?: TextInputProps['keyboardType'];
+  error?: string;
 };
 
 export default function AuthField({
@@ -17,12 +18,13 @@ export default function AuthField({
   placeholder,
   secure,
   keyboardType,
+  error,
 }: Props) {
   return (
     <View style={styles.field}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, error && styles.inputError]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
@@ -32,6 +34,7 @@ export default function AuthField({
         autoCapitalize="none"
         autoCorrect={false}
       />
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 }
@@ -52,4 +55,6 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     backgroundColor: theme.colors.sage,
   },
+  inputError: { borderWidth: 2, borderColor: theme.colors.error },
+  error: { marginLeft: theme.spacing.xs, fontSize: theme.text.small, color: theme.colors.error },
 });
