@@ -1,14 +1,21 @@
 import SubscriptionHeader from '@/components/SubscriptionHeader';
 import SubscriptionPlans from '@/components/SubscriptionPlans';
+import Head from 'expo-router/head';
 import { ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../components/Button';
 import SubscriptionBenefits from '../components/SubscriptionBenefits';
 import { theme } from '../constants/theme';
-
 export default function Subscription() {
   return (
     <SafeAreaView style={styles.screen}>
+      <Head>
+  <title>Suscripción Premium - Mejora tu Aprendizaje</title>
+  <meta
+    name="description"
+    content="Descubre los beneficios de Premium, desbloquea nuevas lecciones y disfruta de una experiencia de aprendizaje más completa."
+  />
+</Head>
       <ScrollView contentContainerStyle={styles.content}>
         <SubscriptionHeader />
         <SubscriptionBenefits />

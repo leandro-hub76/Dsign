@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import Head from 'expo-router/head';
 import { useState } from 'react';
 import {
   Image,
@@ -15,7 +16,6 @@ import AuthField from '../components/AuthField';
 import AuthTabs, { AuthMode } from '../components/AuthTabs';
 import { theme } from '../constants/theme';
 import { loadUsers, saveSession, saveUsers, User } from '../storage/data';
-
 type Errors = {
   username?: string;
   email?: string;
@@ -115,6 +115,13 @@ export default function Login() {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Head>
+  <title>Iniciar Sesión - Aprende Diseño</title>
+  <meta
+    name="description"
+    content="Inicia sesión en tu cuenta para continuar aprendiendo diseño UI/UX, tipografía, color y branding."
+  />
+</Head>
       <KeyboardAvoidingView
         style={styles.screen}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}

@@ -1,5 +1,6 @@
 
 import { router, useFocusEffect } from 'expo-router';
+import Head from 'expo-router/head';
 import { useCallback, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -10,7 +11,6 @@ import OptionCard, { OptionState } from '../components/OptionCard';
 import QuizHeader from '../components/QuizHeader';
 import { theme } from '../constants/theme';
 import { LessonResult as SavedResult, loadResults, saveResults, today } from '../storage/data';
-
 type Option = { id: string; label?: string; swatches?: string[] };
 type Question = {
   id: string;
@@ -131,6 +131,13 @@ export default function Lesson() {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Head>
+  <title>Lecciones - Aprende Diseño Paso a Paso</title>
+  <meta
+    name="description"
+    content="Aprende conceptos de diseño mediante lecciones interactivas, preguntas y actividades prácticas."
+  />
+</Head>
       <View style={styles.content}>
         {stage === 'intro' && (
           <LessonIntro

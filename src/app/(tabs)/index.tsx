@@ -12,6 +12,7 @@ import {
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import Head from 'expo-router/head';
 import ContinueCard from '../../components/ContinueCard';
 import Header from '../../components/Header';
 import LevelCard from '../../components/LevelCard';
@@ -20,7 +21,6 @@ import StatBox from '../../components/StatBox';
 import WeekCard from '../../components/WeekCard';
 import { theme } from '../../constants/theme';
 import { loadSession, User } from '../../storage/data';
-
 // ANIMACIÓN FADE IN
 const enter = (index: number) =>
   FadeInDown.delay(index * 100).duration(450);
@@ -152,6 +152,13 @@ export default function Home() {
       style={styles.screen}
       edges={['top']}
     >
+      <Head>
+  <title>Inicio - Aprende Diseño UI/UX y Tipografía</title>
+  <meta
+    name="description"
+    content="Continúa tus lecciones de diseño, color, tipografía y branding. Revisa tu racha diaria y progreso."
+  />
+</Head>
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}

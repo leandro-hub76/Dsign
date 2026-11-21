@@ -1,3 +1,4 @@
+import Head from 'expo-router/head';
 import { ScrollView, StyleSheet } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,12 +8,18 @@ import PremiumCard from '../../components/PremiumCard';
 import ProfileInfo from '../../components/ProfileInfo';
 import RankProgress from '../../components/RankProgress';
 import { theme } from '../../constants/theme';
-
 const enter = (index: number) => FadeInDown.delay(index * 100);
 
 export default function Perfil() {
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
+      <Head>
+  <title>Mi Perfil - Progreso de Aprendizaje</title>
+  <meta
+    name="description"
+    content="Consulta tu perfil, nivel, experiencia y progreso en tus cursos de diseño UI/UX."
+  />
+</Head>
       <ScrollView contentContainerStyle={styles.content}>
         <Animated.View entering={enter(0)}>
           <Header />

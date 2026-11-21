@@ -13,13 +13,13 @@ import {
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import Head from 'expo-router/head';
 import CourseRow from '../../components/CourseRow';
 import FeaturedCourse from '../../components/FeaturedCourse';
 import Header from '../../components/Header';
 import LessonCard from '../../components/LessonCard';
 import SearchBar from '../../components/SearchBar';
 import { theme } from '../../constants/theme';
-
 // ANIMACIÓN FADE IN
 const enter = (index: number) =>
   FadeInDown.delay(index * 100).duration(450);
@@ -180,6 +180,13 @@ export default function Explore() {
       style={styles.screen}
       edges={['top']}
     >
+      <Head>
+  <title>Explorar Cursos - Aprende Diseño Gráfico y UI/UX</title>
+  <meta
+    name="description"
+    content="Descubre nuevos cursos de diseño, aprende sobre color, diseño de interfaces, tipografía y branding."
+  />
+</Head>
       <ScrollView
         contentContainerStyle={styles.content}
         keyboardShouldPersistTaps="handled"

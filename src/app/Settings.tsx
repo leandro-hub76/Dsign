@@ -1,5 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router, useFocusEffect } from 'expo-router';
+import Head from 'expo-router/head';
 import { useCallback, useState } from 'react';
 import { Alert, Platform, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -70,6 +71,13 @@ export default function Settings() {
 
   return (
     <SafeAreaView style={styles.screen}>
+      <Head>
+  <title>Configuración - Personaliza tu Experiencia</title>
+  <meta
+    name="description"
+    content="Personaliza tu cuenta, administra tus preferencias y configura tu experiencia de aprendizaje."
+  />
+</Head>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.header}>
           <Pressable style={styles.back} onPress={() => router.back()}>
