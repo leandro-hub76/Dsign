@@ -4,20 +4,17 @@
     "slug": "Dsign",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "dsign",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/icon.png"
     },
     "android": {
       "package": "com.equipo.dsign",
-      "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
-      },
+      "adaptiveIcon": { 
+      "backgroundColor": "#1E6F5C", 
+      "foregroundImage": "./assets/images/adaptive-icon.png" },
       "predictiveBackGestureEnabled": false
     },
     "web": {
