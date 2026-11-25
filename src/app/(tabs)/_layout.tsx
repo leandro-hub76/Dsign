@@ -1,7 +1,7 @@
-
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
+import { Pressable, StyleSheet } from 'react-native';
 
 export default function TabsLayout() {
   return (
@@ -34,29 +34,30 @@ export default function TabsLayout() {
           marginVertical: 1,
         },
 
-        tabBarActiveBackgroundColor: '#7FA687',
-        tabBarInactiveBackgroundColor: 'rgba(127, 166, 135, 0.1)',
+        // El fondo uniforme reproduce el verde de la referencia.
+        tabBarActiveBackgroundColor: '#688768',
+        tabBarInactiveBackgroundColor: '#688768',
+
+        // El borde verde rodea todo el botón seleccionado.
+        tabBarButton: (props) => (
+          <Pressable
+            {...(props as unknown as React.ComponentProps<typeof Pressable>)}
+            style={[
+              props.style,
+              props.accessibilityState?.selected
+                ? styles.activeTabButton
+                : styles.tabButton,
+            ]}
+          />
+        ),
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Inicio',
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name="home-outline"
-              size={size}
-              color={color}
-              style={
-                focused
-                  ? {
-                      borderColor: '#4ADE80',
-                      borderWidth: 1,
-                      borderRadius: 15,
-                    }
-                  : undefined
-              }
-            />
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
       />
@@ -72,7 +73,7 @@ export default function TabsLayout() {
       />
 
       <Tabs.Screen
-        name="profile"
+        name="perfil"
         options={{
           title: 'Perfil',
           tabBarIcon: ({ color, size }) => (
@@ -83,3 +84,16 @@ export default function TabsLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabButton: {
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: 'transparent',
+  },
+  activeTabButton: {
+    borderRadius: 15,
+    borderWidth: 1.5,
+    borderColor: '#4ADE80',
+  },
+});
